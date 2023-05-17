@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import type { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-const handler: NextAuthOptions = NextAuth({
+const handler = NextAuth({
   providers: [
     Credentials({
       name: "Credentials",
@@ -37,7 +37,7 @@ const handler: NextAuthOptions = NextAuth({
       return { ...token, ...user };
     },
     session({ session, token, user }) {
-      session.user = token;
+      session.user = token as any;
       return session;
     },
   },
