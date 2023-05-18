@@ -27,7 +27,7 @@ const schema = new mongoose.Schema(
     email: { type: String, require: [true, "Email is required"], unique: true },
     password: { type: String, require: [true, "Password is required"] },
     mobile: { type: String, require: [true, "Mobile is required"] },
-    photo: { type: String },
+    photo: { type: String, default: "" },
     role: { type: String, default: "user", enum: ["user", "admin"] },
     active: { type: String, default: true },
     verify: { type: String, default: false },

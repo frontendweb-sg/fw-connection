@@ -1,0 +1,12 @@
+.avatar {
+  position: relative;
+
+  @each $k,
+  $v in $avatar-sizes {
+    &-#{$k} {
+      min-width: $v;
+      min-height: $v;
+      max-width: $v;
+    }
+  }
+}

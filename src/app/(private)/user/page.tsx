@@ -1,5 +1,15 @@
+import PostCreate from "@/components/posts/PostCreate";
+
+/**
+ * User page
+ * @returns
+ */
 const Page = () => {
-  return <h1>User</h1>;
+  return (
+    <div className="">
+      <PostCreate />
+    </div>
+  );
 };
 
 export default Page;

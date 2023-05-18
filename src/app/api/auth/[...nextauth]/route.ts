@@ -36,7 +36,7 @@ const handler = NextAuth({
     jwt({ token, user }) {
       return { ...token, ...user };
     },
-    session({ session, token, user }) {
+    session({ session, token }) {
       session.user = token as any;
       return session;
     },
