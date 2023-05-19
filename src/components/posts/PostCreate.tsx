@@ -4,9 +4,13 @@ import Typography from "../ui/Typography";
 import Textarea from "../ui/Textarea";
 import Box from "../ui/Box";
 import Button from "../ui/Button";
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import { FaCamera, FaCode, FaPencilAlt, FaVideo } from "react-icons/fa";
 import IconButton from "../ui/IconButton";
+import { AppContent } from "@/utils/AppContent";
+import FileViewer from "../upload/FileViewer";
+import FileUpload from "../upload/FileUpload";
+import Editor from "../ui/Editor";
 
 export interface postCreateProps
   extends React.HtmlHTMLAttributes<HTMLDivElement> {}
@@ -16,16 +20,19 @@ export interface postCreateProps
  * @returns
  */
 const PostCreate = forwardRef<HTMLDivElement, postCreateProps>(({}, ref) => {
+  const [files, setFiles] = useState<File[]>();
+
   return (
     <div className="post-create" ref={ref}>
       <div className="d-flex mb-3">
         <Typography variant="subtitle2" color="primary">
           <FaPencilAlt className="me-2" />
-          Create Post
+          {AppContent.createPost}
         </Typography>
       </div>
       <Textarea />
-
+      <FileViewer files={files!} setFiles={setFiles} />
+      <FileUpload multiple setFiles={(files) => setFiles(files)} />
       <Box>
         <ul className="nav">
           <li>
@@ -51,7 +58,7 @@ const PostCreate = forwardRef<HTMLDivElement, postCreateProps>(({}, ref) => {
             <option key={item}>{item}</option>
           ))}
         </select>
-        <Button>Publish</Button>
+        <Button>{AppContent.publish}</Button>
       </Box>
     </div>
   );

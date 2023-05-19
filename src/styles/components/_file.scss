@@ -1,0 +1,75 @@
+.file-upload {
+
+  input[type="file"] {
+    opacity: 0;
+    position: absolute;
+    width: 0;
+    height: 0;
+  }
+
+  &-section {
+    position: relative;
+    border: 2px dashed $gray-300;
+    min-height: 200px;
+    width: 100%;
+    padding: 15px;
+    border-radius: 5px;
+  }
+
+  &-placeholder {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    bottom: 0;
+    transform: translateY(-50%);
+    text-align: center;
+    margin: auto;
+  }
+
+  &-viewer {
+    position: relative;
+
+    .remove {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+    }
+
+    >div {
+      width: 70px;
+      height: 70px;
+      position: relative;
+    }
+  }
+}
+
+
+//
+//.file-upload {
+//   position: relative;
+//   border: 1px solid $gray-200;
+//   min-height: 200px;
+//   width: 100%;
+//   padding: 15px;
+//   border-radius: 5px;
+
+
+//   input[type="file"] {
+//     opacity: 0;
+//     position: absolute;
+//     width: 0;
+//     height: 0;
+//   }
+
+//   &-placeholder {
+//     position: absolute;
+//     left: 0;
+//     right: 0;
+//     top: 50%;
+//     bottom: 0;
+//     transform: translateY(-50%);
+//     text-align: center;
+//     margin: auto;
+//   }
+// }

@@ -10,4 +10,9 @@ export const AppContent = {
   signInHere: "sign in here",
   signupText: "Don't have an account? click here to",
   signInText: "Already have an account?",
+  createPost: "Create Post",
+  publish: "Publish",
+  fileUploadDragText: "Drag files to upload",
+  browse: "Browse",
+  or: "Or",
 };

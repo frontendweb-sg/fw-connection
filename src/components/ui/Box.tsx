@@ -46,7 +46,7 @@ const Box = ({
   className,
   direction,
   display,
-  flex = "flex",
+  flex,
   ...rest
 }: boxProps) => {
   const classes = classNames(

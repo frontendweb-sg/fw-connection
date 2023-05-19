@@ -8,8 +8,8 @@ import { IconType } from "react-icons";
 export type inpRef = HTMLInputElement;
 export interface IInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
-  errors: FormikErrors<{ [field: string]: any }>;
-  touched: FormikTouched<{ [field: string]: any }>;
+  errors?: FormikErrors<{ [field: string]: any }>;
+  touched?: FormikTouched<{ [field: string]: any }>;
   label?: string;
   parentProps?: React.HtmlHTMLAttributes<HTMLDivElement>;
   startIcon?: JSX.Element;
@@ -38,9 +38,9 @@ const Input = forwardRef<inpRef, IInputProps>(
       "form-control",
       {
         "is-valid":
-          !errors[name as keyof typeof errors] &&
+          !errors?.[name as keyof typeof errors] &&
           touched?.[name as keyof typeof errors],
-        "is-invalid": errors[name as keyof typeof errors],
+        "is-invalid": errors?.[name as keyof typeof errors],
       },
       className
     );

@@ -11,7 +11,7 @@ const handle = app.getRequestHandler();
 
 (async () => {
   await connectDb();
-
+  // https://demos.buddyboss.com/online-communities/?boss-preview=direct
   app.prepare().then(() => {
     const server = express();
 

@@ -12,7 +12,7 @@ export type iconButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const IconButton = forwardRef<HTMLButtonElement, iconButtonProps>(
   ({ children, className, ...rest }, ref) => {
-    const classes = classNames("btn");
+    const classes = classNames("btn", className);
 
     return (
       <button className={classes} ref={ref} {...rest}>
