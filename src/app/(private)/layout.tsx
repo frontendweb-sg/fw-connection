@@ -19,7 +19,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
           <Col md={3} className="pe-4 ">
             <Sidebar />
           </Col>
-          <Col md={6} className="border-start border-end">
+          <Col md={6} className="ps-4 pe-4 border-start border-end">
             {children}
           </Col>
           <Col md={3} className="ps-4">

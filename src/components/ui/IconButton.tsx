@@ -5,17 +5,23 @@ import classNames from "classnames";
 export type iconButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: Variant;
   loading?: boolean;
-  block?: boolean;
   color?: Color;
   size?: Size;
 };
 
 const IconButton = forwardRef<HTMLButtonElement, iconButtonProps>(
-  ({ children, className, ...rest }, ref) => {
-    const classes = classNames("btn", className);
-
+  ({ type = "button", children, color, size, className, ...rest }, ref) => {
+    const classes = classNames(
+      "btn",
+      "btn-icon",
+      {
+        ["btn-" + color]: color,
+        ["btn-" + size]: size,
+      },
+      className
+    );
     return (
-      <button className={classes} ref={ref} {...rest}>
+      <button type={type} className={classes} ref={ref} {...rest}>
         {children}
       </button>
     );

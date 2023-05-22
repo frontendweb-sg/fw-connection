@@ -8,20 +8,19 @@ import { Upload } from "@/utils/Multer";
 
 export async function GET(req: Request) {
   await connectDb();
-  const users = await Post.find({});
+  const users = await Post.find({}).populate("user");
   return NextResponse.json(users);
 }
 
-const upload = Upload("post");
 export async function POST(req: IRequest) {
   await connectDb();
   const body = (await req.json()) as IPost;
-  //console.log("dd", body);
+  console.log("dd", body);
 
-  const bb = await req.formData();
-  const files = bb.getAll("photos") as File[];
-  const fileToStorage = files[0];
-  console.log("dd", bb, fileToStorage.name);
+  // const bb = await req.formData();
+  // const files = bb.getAll("photos") as File[];
+  // const fileToStorage = files[0];
+  // console.log("dd", bb, fileToStorage.name);
 
   try {
     await auth(req);
@@ -38,8 +37,8 @@ export async function POST(req: IRequest) {
     body.user = req.user?.id!;
     body.slug = slug;
     const post = new Post(body);
-    //  const result = await post.save();
-    return NextResponse.json(post);
+    const result = await post.save();
+    return NextResponse.json(result);
   } catch (error) {
     if (error instanceof CustomError) {
       return NextResponse.json({

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { USER_TABLE } from "./user";
+import { IUserDoc, USER_TABLE } from "./user";
 
 export const POST_TABLE = "Post";
 export interface IComment {
@@ -25,12 +25,12 @@ export interface IPost {
   title: string;
   slug: string;
   description: string;
-  photos: string[];
-  user: string;
-  tags: string[];
-  comments: IComment[];
-  likes: ILike[];
-  active?: string;
+  photos: string[] | null;
+  user: IUserDoc | string;
+  tags: string[] | null;
+  comments: IComment[] | null;
+  likes: ILike[] | null;
+  active?: boolean;
   status: Status;
 }
 
@@ -41,9 +41,13 @@ const schema = new mongoose.Schema(
     user: { type: mongoose.Schema.Types.ObjectId, ref: USER_TABLE },
     title: { type: String, require: [true, "Title is required"] },
     slug: { type: String, require: [true, "Slug is required"] },
-    description: { type: String, default: "" },
-    photos: { type: [String] },
-    tags: { type: [String] },
+    description: {
+      type: String,
+      default: "",
+      require: [true, "Description is required"],
+    },
+    photos: { type: [String], default: [] },
+    tags: { type: [String], default: [] },
     comments: [
       {
         user: { type: mongoose.Schema.Types.ObjectId, ref: USER_TABLE },
@@ -61,7 +65,7 @@ const schema = new mongoose.Schema(
         active: { type: Boolean },
       },
     ],
-    active: { type: String, default: true },
+    active: { type: Boolean, default: true },
   },
   {
     timestamps: true,

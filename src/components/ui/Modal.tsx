@@ -18,9 +18,13 @@ const Modal = forwardRef<modalRef, IModalProps>(
     const mRef = useRef<HTMLDivElement>(null);
     const { isOpen, onOpen, onToggle, onClose } = useToggle();
 
+    const openHandler = () => {
+      console.log("Hi");
+      onOpen();
+    };
     useImperativeHandle(ref, () => ({
       isOpen,
-      onOpen,
+      onOpen: openHandler,
       onToggle,
       onClose,
     }));
@@ -34,9 +38,9 @@ const Modal = forwardRef<modalRef, IModalProps>(
           {...rest}
           style={isOpen ? { display: "block", paddingRight: "17px" } : {}}
         >
-          <div className="modal-dialog">
+          <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div className="modal-content">
-              <ModalHeader>{label}</ModalHeader>
+              <ModalHeader onClose={onClose}>{label}</ModalHeader>
               <div className="modal-body">{children}</div>
             </div>
           </div>
@@ -49,8 +53,10 @@ const Modal = forwardRef<modalRef, IModalProps>(
   }
 );
 
-interface IModalHeaderProps extends React.HtmlHTMLAttributes<HTMLDivElement> {}
-const ModalHeader = ({ children }: IModalHeaderProps) => {
+interface IModalHeaderProps extends React.HtmlHTMLAttributes<HTMLDivElement> {
+  onClose: () => void;
+}
+const ModalHeader = ({ children, onClose }: IModalHeaderProps) => {
   return (
     <div className="modal-header">
       <h1 className="modal-title fs-5" id="exampleModalLabel">
@@ -61,6 +67,7 @@ const ModalHeader = ({ children }: IModalHeaderProps) => {
         className="btn-close"
         data-bs-dismiss="modal"
         aria-label="Close"
+        onClick={onClose}
       ></button>
     </div>
   );
