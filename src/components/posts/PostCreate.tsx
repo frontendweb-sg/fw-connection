@@ -24,8 +24,9 @@ import FormGroup from "../ui/FormGroup";
 import PostUser from "./PostUser";
 import { useFormik } from "formik";
 import { API } from "../../axios-instance";
-import { postService } from "@/services/post.services";
 import { useSession } from "next-auth/react";
+import Editor from "../ui/Editor";
+import { postInitialObject } from "@/lib/posts";
 export interface postCreateProps
   extends React.HtmlHTMLAttributes<HTMLDivElement> {}
 
@@ -38,28 +39,43 @@ const PostCreate = forwardRef<HTMLDivElement, postCreateProps>(({}, ref) => {
   const { data: session } = useSession();
 
   const codeModalRef = useRef<modalRef>(null);
+  const imgModalRef = useRef<modalRef>(null);
 
-  const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
-    useFormik({
-      initialValues: postService.getFreshObject(),
-      onSubmit: async (values) => {
-        values.slug = values.title.replace(/\s+/g, "-") as string;
-        const res = await API.post("/api/post", values);
-        console.log(res);
-      },
-    });
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    setFieldValue,
+    handleBlur,
+    handleSubmit,
+  } = useFormik({
+    initialValues: postInitialObject(),
+    onSubmit: async (values) => {
+      //  values.slug = values.title.replace(/\s+/g, "-") as string;
+      values.photos = files;
+      //const res = await API.post("/api/post", values);
+      console.log(values);
+    },
+  });
 
   return (
     <div className="bg-white p-3 shadow-sm rounded">
       <Form onSubmit={handleSubmit}>
         <PostUser user={session?.user!} />
         <FormGroup>
-          <Textarea rows={5} />
+          <Textarea
+            onChange={handleChange}
+            name="description"
+            value={values.description}
+            rows={5}
+          />
         </FormGroup>
+        {files?.length && <FileViewer files={files} setFiles={setFiles} />}
         <Box flex="flex" className="mb-2">
           <ul className="nav">
             <li>
-              <IconButton onClick={codeModalRef.current?.onOpen}>
+              <IconButton onClick={imgModalRef.current?.onOpen}>
                 <FaImage />
               </IconButton>
             </li>
@@ -76,7 +92,12 @@ const PostCreate = forwardRef<HTMLDivElement, postCreateProps>(({}, ref) => {
           </ul>
         </Box>
         <Box flex="flex" justifyContent="between" p={2}>
-          <select className="form-control w-25">
+          <select
+            name="status"
+            value={values.status}
+            onChange={handleChange}
+            className="form-control w-25"
+          >
             {["public", "hold", "only friends"].map((item) => (
               <option key={item}>{item}</option>
             ))}
@@ -85,7 +106,14 @@ const PostCreate = forwardRef<HTMLDivElement, postCreateProps>(({}, ref) => {
         </Box>
       </Form>
 
-      <Modal ref={codeModalRef} label="Upload image">
+      <Modal ref={codeModalRef} label="Add code">
+        <CodeEditor
+          name="code"
+          value={values?.code}
+          setFieldValue={setFieldValue}
+        />
+      </Modal>
+      <Modal ref={imgModalRef} label="Upload image">
         <FileUpload card multiple setFiles={(files) => setFiles(files)} />
       </Modal>
     </div>

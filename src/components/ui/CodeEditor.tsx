@@ -9,7 +9,10 @@ import { useEffect } from "react";
  * Code editor
  * @returns
  */
-export type codeEditorProps = EditorProps & {};
+export type codeEditorProps = EditorProps & {
+  name: string;
+  setFieldValue: (name: string, value: string) => void;
+};
 
 const LANGUAGES = [
   "html",
@@ -22,7 +25,13 @@ const LANGUAGES = [
   "php",
 ];
 
-const CodeEditor = ({ value, height = "50vh", ...rest }: codeEditorProps) => {
+const CodeEditor = ({
+  name,
+  value,
+  height = "50vh",
+  setFieldValue,
+  ...rest
+}: codeEditorProps) => {
   const [localValue, setLocalValue] = useState(value);
   const [language, setLanguage] = useState<string>("javascript");
   const editorRef = useRef(null);
@@ -33,7 +42,9 @@ const CodeEditor = ({ value, height = "50vh", ...rest }: codeEditorProps) => {
     setLanguage(value);
     setLocalValue("");
   };
-
+  const handleChange = (newValue: string) => {
+    setFieldValue(name, newValue);
+  };
   useEffect(() => {
     if (value) {
       setLocalValue(value);
@@ -55,11 +66,13 @@ const CodeEditor = ({ value, height = "50vh", ...rest }: codeEditorProps) => {
         </Box>
       </Box>
       <Editor
+        name={name}
         defaultValue={value}
         defaultLanguage={language}
         value={localValue}
         language={language}
         height={height}
+        onChange={handleChange}
         {...rest}
       />
     </Box>
